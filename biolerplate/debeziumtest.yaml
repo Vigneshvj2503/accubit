@@ -1,0 +1,11 @@
+---
+debezium::jdk_version: java-1.8.0-openjdk
+debezium::jdkdevel_version: java-1.8.0-openjdk-devel
+debezium::vault_roleid: bae4cc13-d017-9148-facb-aa960d72e831
+debezium::vault_secretid: 2842640c-1ec7-94ea-d48d-bbf795d5412f
+debezium::group_id: debezium-test-connect
+debezium::kafka_servers: kafkahdf1.dev.eis.nylcloud.com:6668,kafkahdf2.dev.eis.nylcloud.com:6668,kafkahdf3.dev.eis.nylcloud.com:6668
+debezium::offset_topic: connect-offsets
+debezium::config_topic: connect-configs
+debezium::status_topic: connect-status
+dns_name: debeziumtest

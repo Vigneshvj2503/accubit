@@ -1,0 +1,7 @@
+---
+debezium::jdk_version: java-1.8.0-openjdk
+debezium::jdkdevel_version: java-1.8.0-openjdk-devel
+debezium::vault_roleid: bae4cc13-d017-9148-facb-aa960d72e831
+debezium::vault_secretid: bf8a966a-3f20-6f00-7fb7-966cf28eaca8
+debezium::group_id: debezium-decomm-0.11-connect-cluster
+

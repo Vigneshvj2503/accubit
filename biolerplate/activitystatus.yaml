@@ -1,0 +1,17 @@
+---
+api_with_endtoend_ssl::app_name: activitystatus
+api_with_endtoend_ssl::app_path: /nyl/eis/ms/app
+api_with_endtoend_ssl::app_user: ec2-user
+api_with_endtoend_ssl::aws_keyid: arn:aws:kms:us-east-1:810126520300:key/dcc67c8a-82ba-4a8f-9ed1-830d28397eef
+api_with_endtoend_ssl::consul_discovery_acl: discoveryacl
+api_with_endtoend_ssl::consul_host: https://dev.consul.eis.nylcloud.com
+api_with_endtoend_ssl::jar2consul_url: http://artifactory.eis.nonprod.nylcloudlabs.com/artifactory/libs-release-local/com/nyl/eis/cicd/jar2consul/2.0.0.RELEASE/jar2consul-2.0.0.RELEASE.jar
+api_with_endtoend_ssl::jar2vault_url: http://artifactory.eis.nonprod.nylcloudlabs.com/artifactory/libs-release-local/com/nyl/eis/cicd/jar2vault/2.0.0.RELEASE/jar2vault-2.0.0.RELEASE.jar
+api_with_endtoend_ssl::jar_file_name: activity-status-1.0.0_b47.jar
+api_with_endtoend_ssl::jar_path: http://artifactory.eis.nonprod.nylcloudlabs.com/artifactory/list/libs-release/com/nyl/eis/activity-status/
+api_with_endtoend_ssl::jar_version: 1.0.0_b47
+api_with_endtoend_ssl::jks_password: 1qaz2wsx@
+api_with_endtoend_ssl::vault_host: dev.vault.eis.nylcloud.com
+api_with_endtoend_ssl::zipkin_host: https://dev.zipkin.eis.nylcloud.com
+dns_name: activitystatus
+newrlic_java_agent: enable
