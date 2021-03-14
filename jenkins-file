@@ -1,0 +1,214 @@
+node{
+
+if (env.BRANCH_NAME=='master') {
+   Checkout()
+   sonarqube()
+   release()
+   //JIRA()
+   //Deploy()
+   //SmokeTest() Need to get the test jobs for below tests from dev team
+   //FunctionalTest()
+   //NonFunctionalTest()
+  }
+  
+ if (env.BRANCH_NAME=='develop') {
+    Checkout()
+	build()
+    //JIRA()
+   }
+	
+if (env.BRANCH_NAME=='mkrd01-query-changes') {
+    Checkout()
+	build()
+    //JIRA()
+   }
+
+if (env.BRANCH_NAME=='business-entity') {
+    Checkout()
+	build()
+    //JIRA()
+   }
+
+ }
+ 
+ def Checkout(){
+    stage 'Checkout SCM'
+    println env.BRANCH_NAME
+    checkout scm
+ }
+
+def sonarqube() {
+    stage('SonarQube analysis') {
+ sh 'mvn -s /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/MVN3.5/conf/settings.xml sonar:sonar'
+              
+ }
+   
+}
+def build(){
+
+stage ('JaCoCo') {
+                sh 'mvn clean jacoco:prepare-agent install'
+            }
+stage ('SonarQube analysis') {
+              sh 'mvn -s /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/MVN3.5/conf/settings.xml sonar:sonar'
+              }  
+              
+   stage 'build and publish'
+   def commitsforthebuild = function1()
+def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+def splitstring = lastCommit.split(/[\s,\,]/)
+    withEnv(["JAVA_HOME=${ tool 'JDK8u144' }", "PATH+MAVEN=${tool 'MVN3.5'}/bin:${env.JAVA_HOME}/bin"])
+    {
+    sh 'mvn --version'
+  sh 'mvn clean deploy -U'
+    }
+    
+   }   
+ 
+def function1(){
+
+def commits = null
+return commits
+}
+      
+def getLastSuccessfulCommit() {
+  def lastSuccessfulHash = null
+  def lastSuccessfulBuild = currentBuild.getPreviousSuccessfulBuild()
+  if ( lastSuccessfulBuild ) {
+    lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
+  }
+  return lastSuccessfulHash
+}
+  
+def release() {
+    stage 'release'
+env.scmurl = sh(returnStdout: true, script: 'cat pom.xml | grep -i "<connection>" | cut -d ":" -f3,4 | cut -d "<" -f1').trim()
+def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+if (lastCommit.contains("[maven-release-plugin] prepare release")){
+            sh "echo  Maven release is in progress"  //dont trigger build
+}
+else if (lastCommit.contains("[maven-release-plugin-final]")){
+            sh "echo  Maven release detected"  //dont trigger build
+        }
+else if (lastCommit.contains("[maven-release-plugin] prepare for next development iteration")){
+            sh 'echo  Maven release detected'  //dont trigger build
+	    sh 'pwd'
+            sh 'bash pom_version_change.sh'
+	    sh 'git commit -a -m "[maven-release-plugin-final]"'
+	    sh 'git remote remove origin'
+	    sh "git remote add origin ${env.scmurl}"
+	    sh 'git push --set-upstream origin master'
+}  else {
+        
+        withEnv(["JAVA_HOME=${ tool 'JDK8u144' }", "PATH+MAVEN=${tool 'MVN3.5'}/bin:${env.JAVA_HOME}/bin"])
+    {
+     
+   sh 'mvn --version'
+   sh "echo Last commit is not from maven release plugin" //do build steps 
+            
+    sh 'mvn -B -s /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/MVN3.5/conf/settings.xml release:prepare release:perform'
+    paramAValue = "1.0.0_b${env.BUILD_NUMBER}"
+
+    }
+   
+    }
+}
+// Jira update
+def JIRA() {
+stage 'JIRA'
+step([$class: 'JiraIssueUpdater', issueSelector: [$class: 'DefaultIssueSelector'], scm: scm])
+  } 
+  
+//Deploy 
+def Deploy() {
+ stage 'Deploy'
+    def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+
+if (lastCommit.contains("[maven-release-plugin-final]")){
+            sh "echo  Maven release detected"  //dont trigger build
+        }
+else if (lastCommit.contains("[maven-release-plugin]")){
+paramAValue = "1.0.0_b${env.BUILD_NUMBER}"
+   build job: 'EIS-API/***************update with dev deploy job', parameters: [[$class: 'StringParameterValue', name: 'BUILD_NUMBER', value: paramAValue]]
+    }
+}
+
+//Smoke test execution
+def SmokeTest() {
+ stage 'SmokeTest'
+    def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+
+if (lastCommit.contains("[maven-release-plugin-final]")){
+            sh "echo  Maven release detected"  //dont trigger build
+        }
+else if (lastCommit.contains("[maven-release-plugin]")){
+   build job: 'EIS-API/****update with invesor profiles smoketest job*****'
+
+}
+}
+
+//Non Functional test
+def NonFunctionalTest() {
+ stage 'NonFunctionalTest'
+    def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+
+if (lastCommit.contains("[maven-release-plugin-final]")){
+            sh "echo  Maven release detected"  //dont trigger build
+        }
+else if (lastCommit.contains("[maven-release-plugin]")){
+
+    build job: 'EIS-API/******update with invesor profiles non Functional job****', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']]
+
+}
+}
+//Functional test
+def FunctionalTest() {
+ stage 'FunctionalTest'
+    def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+
+if (lastCommit.contains("[maven-release-plugin-final]")){
+            sh "echo  Maven release detected"  //dont trigger build
+        }
+else if (lastCommit.contains("[maven-release-plugin]")){
+
+    build job: 'EIS-API/****update with invesor profiles Functional job****'
+
+}
+
+}
+
+
+def lastSuccessfulBuild(passedBuilds, build) {
+    if ((build != null) && (build.result != 'SUCCESS')) {
+        passedBuilds.add(build)
+        lastSuccessfulBuild(passedBuilds, build.getPreviousBuild())
+    }
+}
+
+@NonCPS
+def getChangeLog(passedBuilds) {
+    def log = ""
+    for (int x = 0; x < passedBuilds.size(); x++) {
+        def currentBuild = passedBuilds[x];
+        def changeLogSets = currentBuild.rawBuild.changeSets
+        for (int i = 0; i < changeLogSets.size(); i++) {
+            def entries = changeLogSets[i].items
+            for (int j = 0; j < entries.length; j++) {
+                def entry = entries[j]
+                log += "* ${entry.msg} by ${entry.author} \n"
+            }
+        }
+    }
+    return log;
+	
+}
+
+def EraInsight(){
+    stage 'Era Insight'
+	sh 'echo $WORKSPACE'
+	sh 'cd /var/lib/jenkins/ERA_Analyzer/insight-analyzer-linux/ && sh analyze.sh -p "eis-mkt-social-profile" -submit -import "/var/lib/jenkins/workspace/ranch-pipeline-build_master-LUJEEMQAYYFDDKAVWCH4BHECF5TNBPSG7ZQX2NYDQYBHEJ53OW3A/pom.xml" -orgid 5017'
+}
+
+
+==========================================
+
