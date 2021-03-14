@@ -1,0 +1,2 @@
+class { ::jks: }
+class { ::sumologic: }
