@@ -1,0 +1,18 @@
+#!/bin/sh
+mail_grp() {
+        x=`rpm -qa | grep mailx`
+        if [ -z $x ];then
+        yum install mailx -y
+        else
+        echo "mailx installed"
+        fi
+}
+
+
+mail_send() {
+       SUBJECT_NAME="`hostname`:${1}"
+       MAIL_BODY="${2}"
+       if [[ $MAIL_SEND_FLAG == "true" ]]; then
+       mail  -r ${FROM_ADDRESS} -s ${SUBJECT_NAME}  ${TO_ADDRESS} <<< ${MAIL_BODY}
+       fi
+       }

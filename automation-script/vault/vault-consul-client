@@ -1,0 +1,145 @@
+#!/bin/bash
+#
+# consul        Manage the consul agent
+#
+# chkconfig:   2345 90 20
+# description: Consul is a tool for service discovery and configuration
+# processname: consul
+# config: /etc/consul.conf
+# pidfile: /var/run/consul.pid
+
+### BEGIN INIT INFO
+# Provides:       consul
+# Required-Start: $local_fs $network
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop:  0 1 6
+# Short-Description: Manage the consul agent
+# Description: Consul is a tool for service discovery and configuration
+### END INIT INFO
+
+# source function library
+. /etc/rc.d/init.d/functions
+. /etc/profile.d/vault.sh
+. /etc/sysconfig/vault.app
+. /etc/sysconfig/vault.functions
+
+
+prog="consul"
+user="root"
+exec="/nyl/eis/ms/app/consul/${prog}"
+pidfile="/var/run/$prog.pid"
+lockfile="/var/lock/subsys/$prog"
+logfile="/nyl/eis/ms/app/consul/logs/consul.log"
+conffile="/nyl/eis/ms/app/consul/config/consul.json"
+
+# pull in sysconfig settings
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+export GOMAXPROCS=${GOMAXPROCS:-2}
+
+start() {
+    [ -x $exec ] || exit 5
+
+    [ -f $conffile ] || exit 6
+    [ -d $confdir ] || exit 6
+
+    umask 077
+
+    touch $logfile $pidfile
+    chown $user:$user $logfile $pidfile
+
+    echo -n $"Starting $prog: "
+
+    ## holy shell shenanigans, batman!
+    ## daemon can't be backgrounded.  we need the pid of the spawned process,
+    ## which is actually done via runuser thanks to --user.  you can't do "cmd
+    ## &; action" but you can do "{cmd &}; action".
+    daemon \
+        --pidfile=$pidfile \
+        --user=root \
+        " { $exec agent -config-file=$conffile  &>> $logfile & } ; echo \$! >| $pidfile "
+
+    RETVAL=$?
+    echo
+
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    sleep 60
+    curl -k -X PUT -H "Content-Type:application/json" -H "X-Consul-Token:${MASTER_TOKEN}"  -d @/nyl/eis/ms/app/consul/config/acl-agent-token.json https://127.0.0.1:8500/v1/agent/token/acl_agent_token
+    return $RETVAL
+}
+
+stop() {
+    mail_grp
+    echo -n $"Shutting down $prog: "
+    ## graceful shutdown with SIGINT
+    killproc -p $pidfile $exec -INT
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    echo -n $"Reloading $prog: "
+    killproc -p $pidfile $exec -HUP
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    status -p "$pidfile" -l $prog $exec
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+    mail_send "VAULT-CONSUL-CLIENT-SERVICE-start" "Vault-Consul-client service started successfully at $(date +%x_%r)"
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+   mail_send "VAULT-CONSUL-CLIENT-SERVICE-stop" "Vault-Consul-client service stopped at $(date +%x_%r)"
+        ;;
+    restart)
+       # $1
+     stop
+         mail_send "VAULT-CONSUL-CLIENT-SERVICE-restart" "Vault-Consul-client service stopped after restart at $(date +%x_%r)" &&
+     start
+         mail_send "VAULT-CONSUL-CLIENT-SERVICE-restart" "Vault-Consul-client service started after restart at $(date +%x_%r)"
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+
+exit $?
