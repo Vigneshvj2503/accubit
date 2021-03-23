@@ -1,0 +1,60 @@
+
+mail_grp() {
+        x=`rpm -qa | grep mailx`
+        if [ -z $x ];then
+        yum install mailx -y
+        else
+        echo "mailx installed"
+        fi
+}
+
+
+mail_send() {
+       SUBJECT_NAME="`hostname`:${1}"
+       MAIL_BODY="${2}"
+       if [[ $MAIL_SEND_FLAG == "true" ]]; then
+       mail  -r ${FROM_ADDRESS} -s ${SUBJECT_NAME}  ${TO_ADDRESS} <<< ${MAIL_BODY}
+       fi
+       }
+
+turbine_start () {
+echo "Starting $SERVICE_NAME ..."
+        if [ ! -f $PID_PATH_NAME ]; then
+            nohup java -jar ${APP_PARAMS} /tmp 2>> /dev/null >> /dev/null &
+                        echo $! > $PID_PATH_NAME
+            echo "$SERVICE_NAME started ..."
+       mail_send "TURBINE-SERVICE-start" "Turbine service started successfully at $(date +%x_%r)"
+        else
+            echo "$SERVICE_NAME is already running ..."
+        fi
+}
+
+turbine_stop () {
+ if [ -f $PID_PATH_NAME ]; then
+            PID=$(cat $PID_PATH_NAME);
+            echo "$SERVICE_NAME stoping ..."
+            kill $PID;
+            echo "$SERVICE_NAME stopped ..."
+            rm $PID_PATH_NAME
+        else
+            echo "$SERVICE_NAME is not running ..."
+        fi
+}
+
+turbine_status () {
+    if [ -f $PID_PATH_NAME ] && [ ! -z `ps aux | grep -i $(cat $PID_PATH_NAME) | grep -v grep | awk '{print $2}'` ]; then
+            echo "$SERVICE_NAME is running ..."
+            exit 0
+        else
+            echo "$SERVICE_NAME is not running ..."
+            exit 1 
+        fi
+}
+
+turbine_fix_check () {
+   if [ -f $PID_PATH_NAME ] && [ -z `ps aux | grep -i $(cat $PID_PATH_NAME) | grep -v grep | awk '{print $2}'` ]; then
+            echo "$SERVICE_NAME is not running ...But PID is exists..Clearing..PID"
+            rm -f $PID_PATH_NAME
+       fi 
+}
+

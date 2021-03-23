@@ -1,0 +1,57 @@
+#!/bin/bash
+#
+# turbine      start and stop the turbine service
+#
+# chkconfig:   - 35 65
+# description: Turbine - Hystrix application health check system 
+# processname: turbine
+# config: /etc/sysconfig/turbine
+# pidfile: /var/run/turbine.pid
+#
+
+### BEGIN INIT INFO
+# Provides: turbine
+# Required-Start: $local_fs $network
+# Required-Stop: $local_fs $network
+# Should-Start: portreserve
+# Default-Start:
+# Default-Stop: 0 1 2 3 4 5 6
+# Short-Description: start and stop the turbine  server
+# Description: The turbine service allows administrators to remotely manage
+
+### END INIT INFO
+
+# Get config.
+. /etc/sysconfig/network
+. /etc/sysconfig/turbine.app
+. /etc/sysconfig/turbine.functions
+
+mail_grp
+
+case $1 in
+    start)
+         turbine_fix_check
+         turbine_start
+   # mail_send "TURBINE-SERVICE-start" "Turbine service started successfully at $(date +%x_%r)"
+    ;;
+    stop)
+         turbine_stop
+   mail_send "TURBINE-SERVICE-stop" "Turbine service stopped at $(date +%x_%r)"
+    ;;
+    restart)
+         turbine_stop
+    mail_send "TURBINE-SERVICE-restart" "Turbine service stopped after restart at $(date +%x_%r)" &&
+         turbine_start
+    mail_send "TURBINE-SERVICE-restart" "Turbine service started after restart at $(date +%x_%r)"
+    ;;
+    status)
+	 turbine_status
+    ;; 
+    *)
+        echo $"Usage: $0 {start|stop|restart|status}"
+                RETVAL=2
+        ;;
+esac
+
+exit $RETVAL
+
