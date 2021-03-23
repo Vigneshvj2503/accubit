@@ -1,0 +1,72 @@
+mail_grp() {
+	x=`rpm -qa | grep mailx`
+	if [ -z $x ];then
+	yum install mailx -y
+	else
+	echo "mailx installed"
+	fi
+}
+
+mail_send() {
+	SUBJECT_NAME="`hostname`:${1}"
+	MAIL_BODY="${2}"
+	if [[ $MAIL_SEND_FLAG == "true" ]]; then
+	mail  -r ${FROM_ADDRESS} -s ${SUBJECT_NAME}  ${TO_ADDRESS} <<< ${MAIL_BODY}
+	fi
+	}
+
+dump_start() {
+	${DUMP_FILE} dump ${DUMP_PATH}slave_datatrans
+        if [ $? -eq 0 ]; then
+        echo "KDCM Dump successfully completed"
+        else
+        echo "KDC Dump Failed"
+	mail_send "KDC-Dump-Failed" "KDCM dump failed to write the file at $(date +%x_%r)"
+        exit 1
+        fi
+}
+
+bkp_dump() {
+        cp ${DUMP_PATH}slave_datatrans ${BKP_DUMP_PATH}
+        if [ $? -eq 0 ]; then
+        echo "Copy slave_datatrans successfully completed"
+        else
+        echo "Copy Slave_Datatrans Failed"
+	mail_send "KDC-DumpCopy-Failed" "Copy Slave_Datatrans Failed at $(date +%x_%r)"
+        exit 1
+        fi
+}
+
+
+compress_dbfile() {
+        tar -zcvf ${BKP_DUMP_PATH}slave_datatrans-${CURRENT_DATE}.tar.gz ${BKP_DUMP_PATH}slave_datatrans
+        if [ $? -eq 0 ]; then
+        echo "Compress Slave_Datatrans File Completed"
+        else
+        echo "Compress Slave_Datatrans File Failed"
+	mail_send "KDC-CompressDumpFile-Failed" "Compress Slave_Datatrans File Failed at $(date +%x_%r)"
+        exit 1
+        fi
+}
+
+dump_slave() {
+        ${DUMP_SLAVE} -f ${DUMP_PATH}slave_datatrans ${SLAVE_SERVER}
+	if [ $? -eq 0 ]; then
+        echo "KDC Slave Propagation Completed"
+        else
+        echo "KDC Slave Propagation Failed"
+	mail_send "KDC-Slave-Propagation-Failed" "KDC Slave Propagation Failed at $(date +%x_%r)"
+        exit 1
+        fi
+}
+
+remove_oldfile() {
+        find ${BKP_DUMP_PATH}*.tar.gz -mtime ${LOGROTATE_RETENTION} -exec rm {} \;
+        if [ $? -eq 0 ]; then
+        echo "Remove ${LOGROTATE_RETENTION} old backups"
+        else
+        echo "Old Backup Failed"
+	mail_send "KDC-Backup-Failed" "KDC Old Backup Failed to take at $(date +%x_%r)"
+        exit 1
+        fi
+}
