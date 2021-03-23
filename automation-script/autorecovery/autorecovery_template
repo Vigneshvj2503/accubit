@@ -1,0 +1,25 @@
+#!/bin/bash
+#################################
+# Created by : EIS Devops
+# Date : 2019-06-04
+# Type: Foundation Recovery
+#################################
+
+## Log Pre-Reqs ####
+mkdir -p /var/log/eis/
+chmod -R 775 /var/log/eis/
+chmod 755 /var/log/eis/autorecovery.log
+HOSTNAME=`hostname`
+IP=`hostname -i`
+#SERVICE=`hostname | cut -c1-7`
+SERVICE="krb5kdc"
+ENVIRON=`hostname | cut -c1-7`
+## Starting Logger ####
+echo "`date '+%Y-%m-%d %H:%M:%S'`: ENV:$ENVIRON-Host:$HOSTNAME-IPAddress:$IP-Service:$SERVICE Autorecovery Monitor started....."
+/sbin/service $SERVICE status > /dev/null
+if [ $? != 0 ]
+then
+        sudo service $SERVICE  start > /dev/null
+        echo "`date '+%Y-%m-%d %H:%M:%S'`: ENV:$ENVIRON-Host:$HOSTNAME-IPAddress:$IP-Service:$SERVICE Autorecovery Monitor found something isnt okay, so triggered  $SERVICE Service @@....." >> /var/log/eis/autorecovery.log 2>&1
+fi
+echo "`date '+%Y-%m-%d %H:%M:%S'`: ENV:$ENVIRON-Host:$HOSTNAME-IPAddress:$IP-Service:$SERVICE Autorecovery Monitor Closing....."
