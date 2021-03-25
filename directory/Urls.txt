@@ -1,0 +1,286 @@
+https://mdl.pfed.newyorklife.com:9031/idp/startSSO.ping?PartnerSpId=urn:amazon:webservices
+
+
+CyberArk
+https://newyorklife.service-now.com/ess_portal/
+
+CyberArk Access
+https://pmvault.newyorklife.com/PasswordVault/logon.aspx?ReturnUrl=%2fPasswordVault%2fdefault.aspx
+
+AWS Non-Prod
+https://mdl.pfed.newyorklife.com:9031/idp/startSSO.ping?PartnerSpId=urn:amazon:webservices
+https://mdl.pfed.newyorklife.com:9031/idp/startSSO.ping?PartnerSpId=urn%3Aamazon%3Awebservices%3Anylscripts
+Welcome7
+
+https://us-east-1.signin.aws.amazon.com/oauth?SignatureVersion=4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJMOATPLHVSJ563XQ&X-Amz-Date=2018-08-16T04%3A54%3A18.693Z&X-Amz-Signature=ecce576ac8d7345f3e02652b5cd01e19e8d2fc5eb11b380ce8edda8a107119f2&X-Amz-SignedHeaders=host&client_id=arn%3Aaws%3Aiam%3A%3A015428540659%3Auser%2Fhomepage&redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3Fstate%3DhashArgs%2523%26isauthcode%3Dtrue&response_type=code&state=hashArgs%23 
+Welcome123$%^
+
+10.176.50.145
+t15ksty@ec2-user@10.176.50.145@10.176.5.6
+
+internal-kibana-devint-i-elb-1943109221.us-east-1.elb.amazonaws.com
+
+
+Sharepoint
+https://www.teams.newyorklife.com/Private/MDO/EIServices/Production%20Support%20Documentation/Forms/AllItems.aspx?InitialTabId=Ribbon%2ERead&VisibilityContext=WSSTabPersistence
+WIKI
+http://eiswiki.eis.nylcloud.com/xwiki/bin/view/APIs/Preference%20API/Preference%20API%20BRD/
+naravind
+welcome@123
+
+Jenkins
+51406301
+
+10.176.50.29
+
+sudo sed -i 's/HOSTNAME=localhost.localdomain/HOSTNAME=auth-data1.${app_env}.eis.nylcloud.com/g' /etc/sysconfig/network
+
+ll /nyl/app/kafka/logs/mirrormaker.log.* | cut -d'.' -f3 | cut -c1-8 | sort | uniq -c
+
+eis-nonprod-dev-preference_metadata
+eis-nonprod-dev-preference_OptOut
+
+STG and PROD url for jenkins
+http://jenkins.nylcloudlabs.com
+www.sumo.newyorklife.com
+http://artifactory.eis.nonprod.nylcloudlabs.com/
+model password- Welcome7
+windwos pass- Welcome8
+
+NYL Timesheet
+anithiya
+Nigee2190
+
+ap00p030j8ay61oz
+
+AWS Prod Access
+https://nyleisprod.signin.aws.amazon.com/console/
+aws123$%^
+Password: s##o$0#rZEN1
+
+https://launcher.nylcloud.com
+https://launcher.nylcloud.com/app/UserHome
+cloudaware url - cloudaware-3181.cloudforce.com
+CLDEIS1 - username
+Cl0udEis - password 
+
+CloudawareSupport 
+https://cloudaware.atlassian.net/servicedesk
+aravind_nithiyanandham@newyorklife.com
+aravind@123
+
+t15k66a
+
+yaseen_sirajuddin@newyorlife.com
+Enter@123
+
+https://www.authaa.newyorklife.com/siteminderagent/forms/nyli-login.fcc?TYPE=33554432&REALMOID=06-f15467e0-b238-1004-8d1f-839b2c470cb3&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-Osxf2QIy%2bTXo4HVdDHSqwh8zx4bwlBbWRU%2ff0tHOH%2bwpLr5yXNCr%2fZZruaajGvODwOpzYIoi5sQiFV2fAmk4Ns%2fi%2f2FGzT%2fe&TARGET=$SM$https%3a%2f%2fwww%2epfed%2enewyorklife%2ecom%3a9031%2fidp%2fTpUZx%2fresumeSAML20%2fidp%2fSSO%2eping
+
+
+Prod Jenkins
+http://jenkins.nylcloudlabs.com
+http://jenkins.nylcloudlabs.com/mule-job/prod/
+
+Without SAML Prod Jenkin
+http://jenkins.nylcloudlabs.com/
+jenkins/qwyu!@T23_=+
+
+aravind_nithiyanandham@newyorklife.com
+
+
+java -jar jenkins-cli.jar -s http://jenkins.nylcloudlabs.com/  -auth t15ksty:4b6dfaf2e8e9ae035b2cf53de450cec7  create-job /mule-jobs/${env}/${jobname} < ${xmlFilename}
+java -jar jenkins-cli.jar -auth "t15ksty:4b6dfaf2e8e9ae035b2cf53de450cec7" -s http://jenkins.nylcloudlabs.com build /mule-jobs/${env}/${jobname} < ${xmlFilename}
+
+
+vault_elb           = "https://vault1.stg.eis.nylcloud.com"
+vault_role_id       = "d8755cfc-0011-a9ab-e988-b2d300a694e1"
+vault_secret_id     = "b26b8ef9-aa15-df8b-cbd5-c16f667233a6"
+
+
+Beeline
+https://prod.beeline.com/newyorklife/Security/NewLogin.aspx?scmsg=ezpBdXRoZW50aWNhdGlvbk1vZHVsZS5Mb2dvZmZ9%7cFUXIz%2bbvYWKSt%2f1hwYY2df9H8Ojy0KmLpz2eqKjwPRE%3d
+ap00p030j8ay61oz
+Welcome@7
+
+
+US International direct: +1 617 340 4082 
+Chairperson passcode       :  7379 2599
+777111 0r 777333
+US International direct: +1 617 340 4082 PassCode:7486 1838#
+
+https://newyorklife.webex.com/meet/sdondapati
+41770022#
+27498198#
+
+4606
+
++1 (917) 933-1687, access code: 8278286 (Dial-in Number)                     English (United States)  
+
+
+
+
+T15KSTY - Aravind
+T15KXNS - Azfar
+T15KXNT - Suresh
+T15KWIB - Prashanthi
+T15KTU0 - Nanda
+T15AJMD - Bob
+T15K152 - Naresh
+T15K1TO - Mahender  
+T15K74C - Shruti
+T15K74E - Vignesh
+T15K7V6 - Gowtham
+T15K7V8 - Lahari
+
+Data Team
+T15KWIC - Aru
+T15KSBL - Gowthaman
+T15K01W - Sreejith
+T15KQ9T - Vinay
+
+
+
+Artifactory
+http://artifactory.eis.nonprod.nylcloudlabs.com/artifactory/webapp/#/artifacts/browse/tree/General/eis-software/com/nyl/eis/jar2consul-1.0.0-SNAPSHOT-jar-with-dependencies.jar!/com/nyl/eis/
+
+http://artifactory.eis.nonprod.nylcloudlabs.com/
+admin
+password
+
+snapshot:eisfoundationservices-dev-db-postgresql-10-29-bkp
+
+
+curl -u<USERNAME>:<PASSWORD> -T <PATH_TO_FILE> "http://artifactory.eis.nonprod.nylcloudlabs.com/artifactory/eis-software/<TARGET_FILE_PATH>"
+
+curl -uadmin:AP6jQehkxvmtpU8cbz4mDAc7VnB -T /tmp/logstash-codec-avro-offline-plugin-6.0.1.zip "http://artifactory.nylcloud.com/artifactory/eis-software/nyl/app/logstash/plugins/5.5.2"
+
+
+http://artifactory.nylcloud.com/artifactory/eis-software/nyl/app/logstash/plugins/5.5.2/
+
+
+path to file
+STG Environment Details
+
+
+Shared Path
+https://www.teams.newyorklife.com/Private/MDO/EIServices/Production%20Support%20Documentation/Forms/AllItems.aspx?InitialTabId=Ribbon.Document
+
+
+sudo git pull git@gitlab.ecs.nylcloudlabs.com:eis-dev/microservices-config.git
+
+http://gitlab.ecs.nylcloudlabs.com/eis-dev/microservices-config.git
+
+CMR
+
+https://newyorklife.service-now.com/nav_to.do?uri=%2Fchange_request.do%3Fsys_id%3D20c9d925dbc02f40894dd2975e96195e%26sysparm_stack%3Dchange_request_list.do%253Fsysparm_query%253Dactive%253Dtrue 
+
+
+
+VDZ Machine
+https://cloudportal/vcac/org/nyl-et
+
+Jenkins Pass
+!>vt2xbKF~<`E/3VY2019110112@123
+======================
+JKS Password
+Dev,Devint: 1qaz2wsx@
+QA:  GMepEZTja
+STG: NAQkHMQgTBmF
+PRD: EcwFQYJKoZIhvcN
+trustore : changeit
+
+sudo keytool  -list -v -keystore /etc/security/jks/server.truststore.jks -storepass "1qaz2wsx@" -noprompt
+
+
+========================================
+
+Dev	Ambari	T>*c\&j]3U
+	Ranger	J?Vj!-M5hD
+ 	 	 
+Devint	Ambari	7E6S&tLmax
+	Ranger	M8?UcZKX8L
+ 	 	 
+QA	Ambari	t8Nk?e7n_D^vKR+
+	Ranger	4xT9n@PdCYnYM27
+
+ 	 	 
+Prod	Ambari	TKZxzu3zJK4f+_a
+	Ranger	hA9+qepM8FuR=av 
+
+Prod Artifactory
+eis_devops:MicroservicesEIS1
+
+sudo  keytool -v -list -keystore /etc/security/jks/server.truststore.jks -deststorepass EcwFQYJKoZIhvcN
+	
+===================================
+	
+Anypoint
+https://anypoint.mulesoft.com/apiplatform/new-york-life-insurance-c-8/#/portals
+
+
+
+=============================
+
+Rally
+https://rally1.rallydev.com/#/203856771004d/iterationstatus
+
+========================
+Cloudera support
+https://support.hortonworks.com/CustomerPortalLoginPageV2?ec=302&startURL=%2Fs%2F
+aravind_nithiyanandham@newyorklife.com
+Cloudera@123
+=========================
+VDZ
+mstsc
+ins-t15ksty
+=================================
+KB-Document
+https://www.teams.newyorklife.com/Private/MDO/EIServices/Production%20Support%20Documentation/KB-Document/KB-Document.xlsx
+
+/opt/puppetlabs/bin/puppet apply -e "class { ::host_configv3: }" --modulepath=/opt/biolerplate/modules/
+
+internal-hdf-ranger-prod-lb-1112818932.us-east-1.elb.amazonaws.com
+
+==================================
+DB Team DL
+ET_DBA_TCS_ORACLE <ET_DBA_TCS_ORACLE@newyorklife.com>; 
+CID_TCS_IAM <CID_TCS_IAM@newyorklife.com>
+
+CyberArk
+ET_PAM_OPS_L2 <ET_PAM_OPS_L2@newyorklife.com>
+
+==============================
+IAM Role Update : RITM0705955
+
+=================
+CAB Questions
+https://nylintranet.newyorklife.com/docs/DOC-94737
+
+======================
+CA Lisa
+https://www.broadcom.com/mybroadcom/login
+aravind_nithiyanandham@newyorklife.com
+Pass@12345
+package : TASK0345355
+
+SuperS3cr3t!
+========================
+portal.office.com
+
+tcp://IP:2010/Reistry
+
+
+Debezium
+RITM0749967
+
+EC2 Monitoring and Alerting
+RITM0750307
+
+IAM Role 
+RITM0752907
+
+
+
+
+INC1925880
+

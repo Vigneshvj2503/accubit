@@ -1,0 +1,26 @@
+Hi Anand,
+ 
+If we go with Snapshot approach then, Below changes are required on Kafka and ZK machines.
+ 
+## Common changes/points on both Kafka and Zookeeper
+1) /etc/hosts file should be changed on all the machines
+2) Remove data directories on the snapshot
+3) Machine should be brought up in the following order (KDC Primary,KDC Slave,Zookeeper[1,2,3], Kafka[1,2,3]))
+ 
+## Kafka Config files which requires hostname related change if we go with snapshot approach
+1) server.properties
+2) mm-consumer.properties
+3) mm-producer.properties
+4) kafka_jaas.conf
+ 
+## Keytabs to be copied on Kafka machines under /etc/security/keytabs/
+1) kafka.keytab (This has to be copied from KDC primary system)
+2) mirrormaker.keytab (We have to get this keytab from Axton team)
+ 
+## Zookeeper Config files which requires hostname related change if we go with snapshot approach
+1) zoo.cfg
+2) jaas.conf
+3) /nyl/data/zk/data/myid (This file should have the numbers 1 or 2 or 3 on different ZK machines)
+ 
+## Keytabs to be copied on Zookeeper machines under /etc/security/keytabs/
+1.	zookeeper.keytab (This has to be copied from KDC primary system)

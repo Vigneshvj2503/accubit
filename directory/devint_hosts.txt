@@ -1,0 +1,85 @@
+sudo sh -c 'echo "10.176.50.20 es1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.21 es2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.52.17 es3.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.11 kafka1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.13 kafka2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.52.12 kafka3.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.10 kdc1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.52.11 kdc2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.17 kibana1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.52.15 kibana2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.16 logstash1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.52.14 logstash2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.14 zk1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.50.15 zk2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo sh -c 'echo "10.176.52.13 zk3.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+
+
+
+
+
+sudo service kafka status
+sudo service kafka-mm status
+sudo ls -ltr /nyl/app/kafka
+sudo cat /etc/krb5.conf
+sudo cat /etc/sysconfig/network
+sudo cat /nyl/app/kafka/config/kafka_jaas.conf
+sudo cat /nyl/app/kafka/config/mm-producer.properties
+sudo cat /nyl/app/kafka/config/mm-consumer.properties
+sudo cat /nyl/app/kafka/config/server.properties
+sudo cat /nyl/app/kafka/config/producer.properties
+sudo cat /nyl/app/kafka/config/consumer.properties
+sudo cat /nyl/app/kafka/config/server.properties
+sudo cat /nyl/app/kafka/bin/kafka-server-start.sh
+sudo cat /nyl/app/kafka/bin/kafka-service.sh
+sudo cat /nyl/app/kafka/bin/kafka-mm-service.sh
+sudo ls -ltr /etc/init.d/kafka
+sudo ls -ltr /etc/init.d/kafka-mm
+sudo chkconfig | grep kafka
+
+
+
+
+
+
+
+sudo ls -ltr /nyl/app/zookeeper/conf
+sudo ls -ltr /etc/init.d/zookeeper
+sudo cat /nyl/data/zk/data/myid
+sudo cat /nyl/app/zookeeper/conf/jaas.conf
+sudo cat /nyl/app/zookeeper/conf/java.env
+sudo cat /nyl/app/zookeeper/conf/zoo.cfg
+sudo cat /etc/sysconfig/network
+sudo tail -30 /home/zookeeper/zookeeper.out
+sudo cat /etc/krb5.conf
+sudo service zookeeper status
+
+
+curl "http://es1.devint.eis.nylcloudlabs.com:9200"
+curl "http://es1.devint.eis.nylcloudlabs.com:9200/_cat/nodes?v"
+#sudo cat /etc/sysconfig/elasticsearch
+sudo ls -ltr /var/log/elasticsearch
+#sudo cat /nyl/logs/setup.log
+#sudo sh -c 'echo "10.176.50.20  es1.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+#sudo sh -c 'echo "10.176.50.21  es2.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+#sudo sh -c 'echo "10.176.52.17  es3.devint.eis.nylcloudlabs.com" >>/etc/hosts'
+sudo cat /etc/hosts
+#sudo cat /etc/elasticsearch/elasticsearch.yml
+#sudo cat /var/log/elasticsearch/elasticsearch.log
+sudo service elasticsearch status
+#sudo service elasticsearch restart
+#sudo service elasticsearch status
+
+
+
+
+ls /nyl/app/logstash
+sudo cat /home/ec2-user/.bashrc
+sudo java -version
+sudo git --version
+sudo df -h
+
+
+sudo cat /etc/kibana/kibana.yml 
+sudo ls -ltr /var/logs/kibana
+#sudo cat /var/logs/kibana/

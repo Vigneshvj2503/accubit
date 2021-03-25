@@ -1,0 +1,42 @@
+[root@kafkahdf1 kafka]# cd audit/solr/spool/
+[root@kafkahdf1 spool]# ll
+total 20
+drwxr-xr-x 2 kafka hadoop  4096 Sep 25 09:49 archive
+-rw-r--r-- 1 kafka hadoop 12339 Sep 25 09:49 index_batch_batch.solr_kafka_closed.json
+-rw-r--r-- 1 kafka hadoop     0 Sep 25 09:49 index_batch_batch.solr_kafka.json
+[root@kafkahdf1 spool]# cd archive/
+[root@kafkahdf1 archive]# ls -lart
+total 75507720
+-rw-r--r-- 1 kafka hadoop        569 Sep  1 04:42 spool_kafka_20200901-0442.05.log
+-rw-r--r-- 1 kafka hadoop 1839902338 Sep  2 04:42 spool_kafka_20200901-0442.05.1.log
+-rw-r--r-- 1 kafka hadoop 2799867811 Sep  3 04:42 spool_kafka_20200902-0442.20.log
+-rw-r--r-- 1 kafka hadoop 2365635720 Sep  4 04:42 spool_kafka_20200903-0442.31.log
+-rw-r--r-- 1 kafka hadoop 3907961150 Sep  5 04:42 spool_kafka_20200904-0442.45.log
+-rw-r--r-- 1 kafka hadoop 4238308737 Sep  6 04:42 spool_kafka_20200905-0442.53.log
+-rw-r--r-- 1 kafka hadoop 5385294208 Sep  7 04:43 spool_kafka_20200906-0443.07.log
+-rw-r--r-- 1 kafka hadoop 4621893017 Sep  8 04:43 spool_kafka_20200907-0443.10.log
+-rw-r--r-- 1 kafka hadoop 3825281459 Sep  9 04:43 spool_kafka_20200908-0443.15.log
+-rw-r--r-- 1 kafka hadoop 4505502402 Sep 10 04:43 spool_kafka_20200909-0443.23.log
+-rw-r--r-- 1 kafka hadoop 3396208854 Sep 11 04:43 spool_kafka_20200910-0443.25.log
+-rw-r--r-- 1 kafka hadoop 4428358575 Sep 12 04:43 spool_kafka_20200911-0443.39.log
+-rw-r--r-- 1 kafka hadoop 4979280590 Sep 13 04:43 spool_kafka_20200912-0443.51.log
+-rw-r--r-- 1 kafka hadoop 5292965523 Sep 14 04:43 spool_kafka_20200913-0443.53.log
+-rw-r--r-- 1 kafka hadoop 5204975585 Sep 15 04:43 spool_kafka_20200914-0443.59.log
+-rw-r--r-- 1 kafka hadoop 5328484470 Sep 16 04:43 spool_kafka_20200915-0444.05.log
+-rw-r--r-- 1 kafka hadoop 4714112526 Sep 17 04:44 spool_kafka_20200916-0444.05.log
+-rw-r--r-- 1 kafka hadoop 4424318593 Sep 18 04:44 spool_kafka_20200917-0444.19.log
+-rw-r--r-- 1 kafka hadoop 2767657358 Sep 18 16:50 spool_kafka_20200918-0444.34.log
+-rw-r--r-- 1 kafka hadoop  533070606 Sep 20 15:03 spool_kafka_20200919-1503.43.log
+-rw-r--r-- 1 kafka hadoop  514003221 Sep 21 15:04 spool_kafka_20200920-1504.45.log
+-rw-r--r-- 1 kafka hadoop 1819484930 Sep 22 15:06 spool_kafka_20200921-1506.07.log
+-rw-r--r-- 1 kafka hadoop  423308208 Sep 22 18:12 spool_kafka_20200922-1506.08.log
+-rw-r--r-- 1 kafka hadoop    2763834 Sep 22 18:13 spool_kafka_20200922-1812.09.log
+-rw-r--r-- 1 kafka hadoop     185309 Sep 22 18:13 spool_kafka_20200922-1813.24.log
+-rw-r--r-- 1 kafka hadoop        603 Sep 23 11:35 spool_kafka_20200923-1135.52.log
+-rw-r--r-- 1 kafka hadoop     187804 Sep 23 11:35 spool_kafka_20200923-1135.52.1.log
+-rw-r--r-- 1 kafka hadoop        603 Sep 23 23:09 spool_kafka_20200923-2309.48.log
+-rw-r--r-- 1 kafka hadoop     723695 Sep 23 23:10 spool_kafka_20200923-2309.48.1.log
+-rw-r--r-- 1 kafka hadoop        514 Sep 25 09:47 spool_kafka_20200925-0947.39.log
+-rw-r--r-- 1 kafka hadoop       1238 Sep 25 09:47 spool_kafka_20200925-0947.39.1.log
+drwxr-xr-x 3 kafka hadoop       4096 Sep 25 09:49 ..
+drwxr-xr-x 2 kafka hadoop       4096 Sep 25 09:49 .
