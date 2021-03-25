@@ -1,0 +1,156 @@
+node{
+
+def chk_munit = 'true'
+def chk_release = 'true'
+def chk_snapshot = 'true'
+
+if (env.BRANCH_NAME=='master') {
+   checkout()
+   build()
+        if (chk_munit=='true'){ munit() }
+        if (chk_release=='true'){ release() }
+   buildAndPublishToArtifactory()
+	sonarqube()
+   //Erainsight()
+ }
+else {
+   checkout()
+   build()
+        if (chk_munit=='true'){ munit() }
+        if (chk_snapshot=='true'){ snapshot() }
+   buildAndPublishToArtifactory()
+ }
+
+if (env.BRANCH_NAME=='nifras/dev') {
+   checkout()
+   //build()
+        if (chk_munit=='true'){ munit() }
+        //if (chk_snapshot=='true'){ snapshot() }
+   buildAndPublishToArtifactory()
+   sonarqube()
+ }
+
+}
+
+def checkout(){
+    stage 'Checkout SCM'
+    println env.BRANCH_NAME
+    checkout scm
+}
+
+def sonarqube() {
+    stage('SonarQube analysis') {
+    sh 'mvn -s /var/lib/jenkins/mule/settings.xml -Dsonar.sources=. sonar:sonar'
+    }  
+}
+
+
+def build()
+{
+	stage 'Build'
+	sh 'echo "Worksite API Build"'
+	def commitsforthebuild = commitlist()
+	def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+	def splitstring = lastCommit.split(/[\s,\,]/)
+	sh 'mvn -s /var/lib/jenkins/mule/settings.xml -DskipTests=true clean compile'
+}
+
+def munit()
+{
+	stage 'MUnit'
+	sh 'echo "WorksiteAPI MUnit"'
+	sh 'sleep 10'
+}
+
+def release()
+{
+	stage 'Release'
+	sh 'echo "Publish Release to Artifactory"'
+	env.scmurl = sh(returnStdout: true, script: 'cat pom.xml | grep -i "<connection>" | cut -d ":" -f3,4 | cut -d "<" -f1').trim()
+	def lastCommit = sh returnStdout: true, script: 'git log -1 --pretty=%B'
+
+       		//sh "echo Last commit is not from maven release plugin"
+    		def paramValue = "1.0.0_b${env.BUILD_NUMBER}"
+    		println paramValue
+    		sh "echo $paramValue"
+    		//sh 'echo "${env.BUILD_NUMBER}"'
+    		sh 'mvn -B -s /var/lib/jenkins/mule/settings.xml -DskipTests=true package'
+	  	//sh "git tag ${paramValue}"
+	        //sh 'git push origin --tags'
+	    sh 'git remote remove origin'
+	    sh "git remote add origin ${env.scmurl}"
+		sh "git tag ${paramValue}"
+	        sh 'git push origin --tags'
+	    //sh 'git push --set-upstream origin master'
+    	}
+
+def snapshot(){
+	stage 'Snapshot'
+	sh 'echo "Publish Snapshot to Artifactory"'
+	sh 'mvn -X -B -s /var/lib/jenkins/mule/settings.xml -DskipTests=true package'
+	//sh 'mvn -X -B -s /var/lib/jenkins/mule/settings.xml release:prepare'
+	sh 'sleep 5'
+}
+
+def commitlist()
+{
+	def commits = null
+	return commits
+}
+
+def getLastSuccessfulCommit() {
+  def lastSuccessfulHash = null
+  def lastSuccessfulBuild = currentBuild.getPreviousSuccessfulBuild()
+  if ( lastSuccessfulBuild ) {
+    lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
+  }
+  return lastSuccessfulHash
+}
+
+def lastSuccessfulBuild(passedBuilds, build) {
+    if ((build != null) && (build.result != 'SUCCESS')) {
+        passedBuilds.add(build)
+        lastSuccessfulBuild(passedBuilds, build.getPreviousBuild())
+    }
+}
+
+def buildAndPublishToArtifactory() {
+
+    stage ('Distribute binaries to Jfrog Artifactory') { 
+    def SERVER_ID = '1' 
+    def server = Artifactory.server SERVER_ID
+    def buildInfo = Artifactory.newBuildInfo()
+    buildInfo.env.capture = true
+    def rtMaven = Artifactory.newMavenBuild()
+   
+   rtMaven.tool = 'MVN3.5' 
+   //rtMaven.opts = "-Denv=dev"
+    rtMaven.deployer snapshotRepo: 'eis-contract-life', server: server
+   rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server:server
+
+  // rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+   rtMaven.run pom: 'pom.xml', goals: 'clean install -DskipTests=true --settings /var/lib/jenkins/mule/settings.xml', buildInfo: buildInfo
+   buildInfo.retention maxBuilds: 10, maxDays: 7, deleteBuildArtifacts: true
+  
+   server.publishBuildInfo buildInfo
+    
+}
+    
+}
+
+@NonCPS
+def getChangeLog(passedBuilds) {
+    def log = ""
+    for (int x = 0; x < passedBuilds.size(); x++) {
+        def currentBuild = passedBuilds[x];
+        def changeLogSets = currentBuild.rawBuild.changeSets
+        for (int i = 0; i < changeLogSets.size(); i++) {
+            def entries = changeLogSets[i].items
+            for (int j = 0; j < entries.length; j++) {
+                def entry = entries[j]
+                log += "* ${entry.msg} by ${entry.author} \n"
+            }
+        }
+    }
+    return log;
+}

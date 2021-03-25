@@ -1,0 +1,4 @@
+{
+  "secureProperties": ["mule.config-service.client-secret","mule.config-service.client-id","mule.consul.config.acl-token","mule.consul.discovery.acl-token","mule.vault.app-role.role-id","mule.vault.app-role.secret-id","anypoint.platform.client_id","anypoint.platform.client_secret"],
+  "minMuleVersion": "4.2.0"
+}
