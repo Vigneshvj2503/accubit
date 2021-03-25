@@ -1,0 +1,15 @@
+api:
+  host: dev.apigw.newyorklife.com
+backend:
+  servicename: unclaimed-funds
+base:
+  path: /api/1.0
+consul:
+  host: dev.consul.eis.nylcloud.com
+  port: 443
+  path: /v1/catalog/service
+https:
+  ssl:
+    port: 443
+response:
+  timeout: 3000
