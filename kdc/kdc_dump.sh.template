@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "KDC dump process started at `date`"
+sudo kdb5_util dump /var/tmp/slave_datatrans
+sudo kprop -f /var/tmp/slave_datatrans kdc2.${DNS}
+sudo kprop -f /var/tmp/slave_datatrans kdc3.${DNS}
+echo "KDC dump process completed at `date`"

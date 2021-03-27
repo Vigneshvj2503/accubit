@@ -1,0 +1,3 @@
+host/kdc1.${DNS}@${REALM}
+host/kdc2.${DNS}@${REALM}
+host/kdc3.${DNS}@${REALM}

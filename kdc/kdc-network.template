@@ -1,0 +1,3 @@
+NETWORKING=yes
+HOSTNAME=kdc${ID}.${DNS}
+NOZEROCONF=yes

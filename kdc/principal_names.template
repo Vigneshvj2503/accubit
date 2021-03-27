@@ -1,0 +1,4 @@
+host/kdc1.${DNS},${KEYTABS_DIR}/kdc1.keytab
+host/kdc2.${DNS},${KEYTABS_DIR}/kdc2.keytab
+host/kdc3.${DNS},${KEYTABS_DIR}/kdc3.keytab
+
